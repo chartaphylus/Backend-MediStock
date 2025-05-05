@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use app\Http\Controllers\User\AuthController;
-use app\Http\Controllers\User\DashboardController;
-use app\Http\Controllers\User\ObatController;
+use app\Http\Controllers\user\AuthController;
+use app\Http\Controllers\user\DashboardController;
+use app\Http\Controllers\user\ObatController;
 
 
 Route::get('/', function () {
