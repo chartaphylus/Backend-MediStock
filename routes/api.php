@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\ObatController;
+use App\Http\Controllers\Api\SaranKesehatanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,6 @@ route::patch('/ubah-password', [AuthController::class, 'ubahPassword'])->middlew
 route::get('/all-kategories', [KategoriController::class, 'index'])->middleware('auth:sanctum');
 
 route::apiResource('all-obat', ObatController::class)->middleware('auth:sanctum');
+
+Route::get('/saran-kesehatan', [SaranKesehatanController::class, 'index'])->middleware('auth:sanctum');
 

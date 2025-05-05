@@ -102,5 +102,5 @@
     </tbody>
 </table>
 
-{{ $obats->links() }}
+{{ $obats->links('pagination::bootstrap-5') }}
 @endsection

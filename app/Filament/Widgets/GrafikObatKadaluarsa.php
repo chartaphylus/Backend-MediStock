@@ -8,21 +8,46 @@ use Carbon\Carbon;
 
 class GrafikObatKadaluarsa extends BarChartWidget
 {
-    protected static ?string $heading = 'Obat Hampir Kadaluarsa';
+    protected static ?string $heading = 'Obat Kadaluarsa';
 
     protected function getData(): array
     {
-        $range = now()->addDays(14); // 14 hari ke depan
-        $obats = Obat::whereDate('tanggal_kadaluarsa', '<=', $range)
+        $now = now();
+        $range = now()->addDays(14);
+
+        // Obat yang hampir kadaluarsa (dalam 14 hari ke depan)
+        $hampirKadaluarsa = Obat::whereBetween('tanggal_kadaluarsa', [$now, $range])
             ->orderBy('tanggal_kadaluarsa')
             ->get();
 
+        // Obat yang sudah kadaluarsa
+        $sudahKadaluarsa = Obat::whereDate('tanggal_kadaluarsa', '<', $now)
+            ->orderBy('tanggal_kadaluarsa')
+            ->get();
+
+        // Gabungkan label dari kedua kelompok (Nama Obat + Tanggal)
+        $labels = $hampirKadaluarsa->merge($sudahKadaluarsa)
+            ->map(fn($obat) => $obat->nama_obat . ' (' . Carbon::parse($obat->tanggal_kadaluarsa)->format('d-m-Y') . ')')
+            ->toArray();
+
         return [
-            'labels' => $obats->pluck('nama_obat')->toArray(),
+            'labels' => $labels,
             'datasets' => [
                 [
-                    'label' => 'Tanggal Kadaluarsa',
-                    'data' => $obats->pluck('tanggal_kadaluarsa')->map(fn($tgl) => Carbon::parse($tgl)->diffInDays(now()))->toArray(),
+                    'label' => 'Hampir Kadaluarsa',
+                    'data' => collect($labels)->map(fn ($label) =>
+                        $hampirKadaluarsa->filter(fn($obat) =>
+                            $label === $obat->nama_obat . ' (' . Carbon::parse($obat->tanggal_kadaluarsa)->format('d-m-Y') . ')'
+                        )->isNotEmpty() ? 1 : 0)->toArray(),
+                    'backgroundColor' => 'rgba(255, 206, 86, 0.7)', // kuning
+                ],
+                [
+                    'label' => 'Sudah Kadaluarsa',
+                    'data' => collect($labels)->map(fn ($label) =>
+                        $sudahKadaluarsa->filter(fn($obat) =>
+                            $label === $obat->nama_obat . ' (' . Carbon::parse($obat->tanggal_kadaluarsa)->format('d-m-Y') . ')'
+                        )->isNotEmpty() ? 1 : 0)->toArray(),
+                    'backgroundColor' => 'rgba(255, 99, 132, 0.7)', // merah
                 ],
             ],
         ];

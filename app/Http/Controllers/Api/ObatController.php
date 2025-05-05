@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ObatController extends Controller
 {
-    // Menampilkan semua data obat
     public function index()
     {
         $obat = Obat::with('kategori')->get();
@@ -21,7 +20,6 @@ class ObatController extends Controller
         ]);
     }
 
-    // Menyimpan data obat baru
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -86,6 +84,7 @@ class ObatController extends Controller
             'stock' => 'sometimes|required|integer',
             'tanggal_kadaluarsa' => 'sometimes|required|date',
             'harga' => 'sometimes|required|numeric',
+            'updated_by' => 'nullable|integer',
         ]);
 
         if ($validator->fails()) {

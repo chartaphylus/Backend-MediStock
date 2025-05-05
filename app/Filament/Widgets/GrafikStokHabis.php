@@ -22,6 +22,11 @@ class GrafikStokHabis extends BarChartWidget
                 [
                     'label' => 'Stok Tersisa',
                     'data' => $obats->pluck('stock')->toArray(),
+                    'backgroundColor' => $obats->map(function ($obat) {
+                        return $obat->stock == 0
+                            ? 'rgba(255, 99, 132, 0.8)'  
+                            : 'rgba(255, 206, 86, 0.8)';
+                    })->toArray(),
                 ],
             ],
         ];
