@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -25,6 +26,8 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
+        $user->last_login_at = Carbon::now();
+        $user->save();
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([

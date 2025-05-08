@@ -47,7 +47,6 @@ class ObatController extends Controller
         ]);
     }
 
-    // Menampilkan detail obat
     public function show($id)
     {
         $obat = Obat::with('kategori')->find($id);
@@ -66,7 +65,6 @@ class ObatController extends Controller
         ]);
     }
 
-    // Mengupdate data obat
     public function update(Request $request, $id)
     {
         $obat = Obat::find($id);
@@ -104,7 +102,6 @@ class ObatController extends Controller
         ]);
     }
 
-    // Menghapus data obat
     public function destroy($id)
     {
         $obat = Obat::find($id);

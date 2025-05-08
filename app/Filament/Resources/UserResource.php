@@ -48,7 +48,10 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('email')->searchable(),
-                Tables\Columns\TextColumn::make('created_at')->dateTime(),
+                Tables\Columns\TextColumn::make('created_at')->dateTime('d M Y'),
+                Tables\Columns\TextColumn::make('last_login_at')
+                ->label('Terakhir Login')
+                ->dateTime('d M Y'),
             ])
             ->filters([
                 //

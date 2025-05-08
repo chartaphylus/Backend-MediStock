@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\SaranKesehatanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// http://127.0.0.1:8000/api/user
+// 5|Alg9SRceiPrJwnu3FMhyyCdUDt6SirK7qXzW8DcS44cd5ecd5|Alg9SRceiPrJwnu3FMhyyCdUDt6SirK7qXzW8DcS44cd5ecd/user
 
 Route::get('/user', function (Request $request) {
     return $request->user();

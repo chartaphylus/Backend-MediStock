@@ -13,7 +13,7 @@ class UserApiController extends Controller
     // Menampilkan semua user
     public function index()
     {
-        $users = User::select('id', 'name', 'email')->get();
+        $users = User::select('id', 'name', 'email', 'last_login_at')->get();
 
         return response()->json([
             'success' => true,
@@ -55,7 +55,7 @@ class UserApiController extends Controller
     // Menampilkan detail user
     public function show($id)
     {
-        $user = User::select('id', 'name', 'email')->find($id);
+        $user = User::select('id', 'name', 'email', 'last_login_at')->find($id);
 
         if (!$user) {
             return response()->json([

@@ -22,6 +22,14 @@ class AuthController extends Controller
         }
 
         return back()->withErrors(['email' => 'Email atau password salah']);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user,
+        ]);
     }
 
     public function logout()
