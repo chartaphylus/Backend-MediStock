@@ -51,7 +51,8 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')->dateTime('d M Y'),
                 Tables\Columns\TextColumn::make('last_login_at')
                 ->label('Terakhir Login')
-                ->dateTime('d M Y'),
+                ->timezone('Asia/Jakarta')
+                ->dateTime('d M Y H:i:s')
             ])
             ->filters([
                 //
